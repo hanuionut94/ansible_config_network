@@ -1,0 +1,24 @@
+---
+- name: Gather and Display Facts for Cisco Devices
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Gather interface status
+      cisco.ios.ios_command:
+        commands: show ip interface brief
+      register: result
+
+    - name: Display interface status
+      debug:
+        var: result
+
+    - name: Gather device facts
+      ios_facts:
+      register: device_facts      
+
+    - name: Display device facts
+      debug:
+        var: device_facts
+
